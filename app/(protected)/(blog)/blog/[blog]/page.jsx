@@ -27,6 +27,9 @@ const Page = ({ params }) => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [blogImage, setBlogImage] = useState('');
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDesc, setMetaDesc] = useState('');
+  const [metaKeywords, setMetaKeywords] = useState('');
 
   const [previewImage, setPreviewImage] = useState('');
 
@@ -77,6 +80,9 @@ const Page = ({ params }) => {
 
       setTitle(res.data.data.blog.title);
       setContent(res.data.data.blog.content);
+      setMetaTitle(res.data.data.blog.metaTitle);
+      setMetaDesc(res.data.data.blog.metaDesc);
+      setMetaKeywords(res.data.data.blog.metaKeyword);
       setPreviewImage(res.data.data.blog.images);
     } catch (err) {
       console.log(err);
@@ -120,6 +126,51 @@ const Page = ({ params }) => {
               tabIndex={1}
               value={content}
               onBlur={(e) => setContent(e)}
+            />
+          </div>
+
+          <div className="my-3 md:my-5">
+            <Label htmlFor="meta-title">
+              Meta Title <span>*</span>
+            </Label>
+            <Input
+              type="text"
+              id="meta-title"
+              name="meta-title"
+              placeholder="Please Enter Meta Title"
+              value={metaTitle}
+              onChange={(e) => setMetaTitle(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="my-3 md:my-5">
+            <Label htmlFor="meta-description">
+              Meta Description <span>*</span>
+            </Label>
+            <Input
+              type="text"
+              id="meta-description"
+              name="meta-description"
+              placeholder="Please Enter Meta Description"
+              value={metaDesc}
+              onChange={(e) => setMetaDesc(e.target.value)}
+              required
+            />
+          </div>
+
+          <div className="my-3 md:my-5">
+            <Label htmlFor="meta-description">
+              Meta Keywords <span>*</span>
+            </Label>
+            <Input
+              type="text"
+              id="meta-description"
+              name="meta-description"
+              placeholder="Please Enter Meta Description"
+              value={metaKeywords}
+              onChange={(e) => setMetaKeywords(e.target.value)}
+              required
             />
           </div>
 

@@ -18,6 +18,9 @@ const Page = () => {
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [blogImage, setBlogImage] = useState('');
+  const [metaTitle, setMetaTitle] = useState('');
+  const [metaDesc, setMetaDesc] = useState('');
+  const [metaKeywords, setMetaKeywords] = useState('');
 
   const handleBlogSubmission = async (e) => {
     try {
@@ -27,6 +30,9 @@ const Page = () => {
       formData.append('title', title);
       formData.append('content', content);
       formData.append('blogImage', blogImage);
+      formData.append('metaTitle', metaTitle);
+      formData.append('metaDesc', metaDesc);
+      formData.append('metaKeywords', metaKeywords);
 
       await axios.post(`/post-blog`, formData);
 
@@ -87,7 +93,7 @@ const Page = () => {
             />
           </div>
 
-          {/* <div className="my-3 md:my-5">
+          <div className="my-3 md:my-5">
             <Label htmlFor="meta-title">
               Meta Title <span>*</span>
             </Label>
@@ -96,6 +102,8 @@ const Page = () => {
               id="meta-title"
               name="meta-title"
               placeholder="Please Enter Meta Title"
+              value={metaTitle}
+              onChange={(e) => setMetaTitle(e.target.value)}
               required
             />
           </div>
@@ -109,22 +117,26 @@ const Page = () => {
               id="meta-description"
               name="meta-description"
               placeholder="Please Enter Meta Description"
+              value={metaDesc}
+              onChange={(e) => setMetaDesc(e.target.value)}
               required
             />
           </div>
 
           <div className="my-3 md:my-5">
-            <Label htmlFor="meta-description">
+            <Label htmlFor="meta-keywords">
               Meta Keywords <span>*</span>
             </Label>
             <Input
               type="text"
-              id="meta-description"
-              name="meta-description"
-              placeholder="Please Enter Meta Description"
+              id="meta-keywords"
+              name="meta-keywords"
+              placeholder="Please Enter Meta keywords"
+              value={metaKeywords}
+              onChange={(e) => setMetaKeywords(e.target.value)}
               required
             />
-          </div> */}
+          </div>
 
           <div className="flex gap-3">
             <Button>Publish Blog</Button>
