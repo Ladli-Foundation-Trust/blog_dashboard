@@ -2,20 +2,19 @@
 
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/navigation';
 import axios from '@/lib/axiosInstance';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { LockKeyhole, Mail, ShieldCheck } from 'lucide-react';
 
-const Page = ({ params, searchParams }) => {
-  const router = useRouter();
+const Page = ({ searchParams }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [formErrors, setFormErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
-  const callbackUrl = searchParams.callbackUrl;
+  const callbackUrl = searchParams?.callbackUrl;
 
   //    validation
   const validateForm = ({ email, password }) => {
@@ -44,7 +43,6 @@ const Page = ({ params, searchParams }) => {
     setIsLoading(true);
 
     const errors = validateForm({ email, password });
-
     if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
       setIsLoading(false);
@@ -56,7 +54,7 @@ const Page = ({ params, searchParams }) => {
         '/user/login',
         { email, password },
         { withCredentials: true }
-      );
+      );      
 
       sessionStorage.setItem('access_token', res.data.accessToken);
 
@@ -65,47 +63,88 @@ const Page = ({ params, searchParams }) => {
     } catch (error) {
       console.log(error, 'error-login');
 
-      toast.error(error.response.data.message);
+      toast.error(error.response?.data?.message || 'Unable to sign in');
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full">
-        <Card className="w-full shadow-lg">
-          <CardHeader className="space-y-1 pb-6">
-            <h2 className="text-2xl font-semibold text-center">Sign In</h2>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 px-4 py-12 sm:px-6 lg:px-8">
+      <div className="w-full max-w-md">
+        <div className="mb-6 text-center">
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-rose-100 text-rose-700">
+            <ShieldCheck className="h-6 w-6" />
+          </div>
+          <p className="text-sm font-semibold uppercase tracking-wide text-rose-700">
+            Ladli Foundation
+          </p>
+          <h1 className="mt-2 text-3xl font-bold text-slate-950">
+            Dashboard Sign In
+          </h1>
+        </div>
+
+        <Card className="w-full border-slate-200 shadow-sm">
+          <CardHeader className="space-y-1 border-b border-slate-100 pb-5">
+            <h2 className="text-lg font-semibold text-slate-950">
+              Continue to your workspace
+            </h2>
+            <p className="text-sm text-slate-600">
+              Use your authorized account to manage content.
+            </p>
           </CardHeader>
           <CardContent className="space-y-6">
             <form className="space-y-4" onSubmit={handleLogin}>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="Please Enter Your Email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <Mail className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  <Input
+                    id="email"
+                    type="email"
+                    placeholder="name@example.com"
+                    value={email}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      setFormErrors((prev) => ({ ...prev, email: '' }));
+                    }}
+                    className="pl-9"
+                    required
+                  />
+                </div>
+                {formErrors.email && (
+                  <p className="text-xs font-medium text-red-600">
+                    {formErrors.email}
+                  </p>
+                )}
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input
-                  id="password"
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  required
-                />
+                <div className="relative">
+                  <LockKeyhole className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" />
+                  <Input
+                    id="password"
+                    type="password"
+                    placeholder="Enter password"
+                    value={password}
+                    onChange={(e) => {
+                      setPassword(e.target.value);
+                      setFormErrors((prev) => ({ ...prev, password: '' }));
+                    }}
+                    className="pl-9"
+                    required
+                  />
+                </div>
+                {formErrors.password && (
+                  <p className="text-xs font-medium text-red-600">
+                    {formErrors.password}
+                  </p>
+                )}
               </div>
 
-              <Button type="submit" className="w-full">
-                Sign In
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Signing in...' : 'Sign In'}
               </Button>
             </form>
           </CardContent>

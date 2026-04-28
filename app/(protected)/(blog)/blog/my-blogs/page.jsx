@@ -32,14 +32,24 @@ const Page = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="max-w-4xl mx-auto px-4">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">Active Blogs</h1>
-        <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden">
+    <div className="min-h-screen bg-slate-50 px-4 py-8">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-wide text-rose-700">
+            Blog Publishing
+          </p>
+          <h1 className="mt-2 text-3xl font-bold text-slate-950">
+            Active Blogs
+          </h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Track your submitted blog posts and continue editing.
+          </p>
+        </div>
+        <div className="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
           <div className="overflow-x-auto">
             <Table>
               <TableHeader>
-                <TableRow>
+                <TableRow className="bg-slate-50">
                   <TableHead>S.No</TableHead>
                   <TableHead className="w-[400px]">Blog Title</TableHead>
                   <TableHead>Status</TableHead>
@@ -47,6 +57,14 @@ const Page = () => {
                 </TableRow>
               </TableHeader>
               <TableBody>
+                {blogs.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={4} className="py-8 text-center">
+                      No active blogs found.
+                    </TableCell>
+                  </TableRow>
+                )}
+
                 {blogs.map((blog, index) => (
                   <TableRow key={blog._id}>
                     <TableCell className="font-medium">{index + 1}</TableCell>

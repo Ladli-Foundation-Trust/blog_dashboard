@@ -9,6 +9,8 @@ const protectedRoutes = [
   '/blog/my-blogs',
   '/blog/create-blog',
   '/blog/all-blogs',
+  '/press-releases',
+  '/press-releases/create-press-release',
 ];
 
 const publicOnlyRoutes = ['/login'];

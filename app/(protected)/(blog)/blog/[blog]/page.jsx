@@ -94,11 +94,21 @@ const Page = ({ params }) => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8">
-      <div className="container px-2 md:mx-auto">
-        <h1 className="text-2xl font-bold text-gray-900 mb-8">Create A Blog</h1>
+    <div className="min-h-screen bg-slate-50 px-4 py-8">
+      <div className="mx-auto max-w-5xl">
+        <div className="mb-6">
+          <p className="text-sm font-semibold uppercase tracking-wide text-rose-700">
+            Blog Publishing
+          </p>
+          <h1 className="mt-2 text-3xl font-bold text-slate-950">
+            Edit Blog
+          </h1>
+          <p className="mt-2 text-sm text-slate-600">
+            Update the story content, metadata, approval status, or image.
+          </p>
+        </div>
         <form
-          className="border px-3 pb-3 rounded-lg bg-white"
+          className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm"
           onSubmit={handleBlogSubmission}
           method="post"
         >
@@ -181,6 +191,7 @@ const Page = ({ params }) => {
 
             {user.role === 'admin' && (
               <Button
+                type="button"
                 className="bg-green-700"
                 onClick={() => {
                   approveBlog();
@@ -192,8 +203,11 @@ const Page = ({ params }) => {
           </div>
         </form>
 
-        <div className="mt-10">
-          <div>
+        <div className="mt-8 rounded-lg border border-slate-200 bg-white p-5 shadow-sm">
+          <h2 className="mb-4 text-lg font-semibold text-slate-950">
+            Blog Image
+          </h2>
+          <div className="overflow-hidden rounded-md border border-slate-200 bg-slate-50">
             <Image src={previewImage} alt="" width={300} height={100} />
           </div>
 
