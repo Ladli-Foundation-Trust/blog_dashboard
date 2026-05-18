@@ -11,7 +11,7 @@ import {
 } from '@/components/ui/table';
 import axios from '@/lib/axiosInstance';
 import { getPressReleaseUrl } from '@/lib/pressReleaseApi';
-import { Languages, Newspaper, PlusCircle } from 'lucide-react';
+import { Languages, Newspaper, Pencil, PlusCircle } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
@@ -180,12 +180,13 @@ const Page = () => {
                   <TableHead>Date</TableHead>
                   <TableHead>Language</TableHead>
                   <TableHead>Media</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>
                 {isLoading && (
                   <TableRow>
-                    <TableCell colSpan={7} className="py-8 text-center">
+                    <TableCell colSpan={8} className="py-8 text-center">
                       Loading press releases...
                     </TableCell>
                   </TableRow>
@@ -193,7 +194,7 @@ const Page = () => {
 
                 {!isLoading && pressReleases.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={7} className="py-8 text-center">
+                    <TableCell colSpan={8} className="py-8 text-center">
                       No press releases found.
                     </TableCell>
                   </TableRow>
@@ -221,6 +222,16 @@ const Page = () => {
                       <TableCell>{getLanguageLabel(pressRelease)}</TableCell>
                       <TableCell>
                         {getMediaLabel(pressRelease)}
+                      </TableCell>
+                      <TableCell className="text-right">
+                        <Button asChild size="sm" variant="outline">
+                          <Link
+                            href={`/press-releases/edit-press-release/${pressRelease._id}`}
+                          >
+                            <Pencil className="h-3.5 w-3.5" />
+                            Edit
+                          </Link>
+                        </Button>
                       </TableCell>
                     </TableRow>
                   ))}
